@@ -1,0 +1,28 @@
+{
+  "$schema": "../node_modules/@companion-module/base/assets/manifest.schema.json",
+  "type": "connection",
+  "id": "gslides-ndi-presenter",
+  "name": "gslides-ndi-presenter",
+  "shortname": "gslides-ndi",
+  "description": "Control Google Slides NDI Presenter: slides, video, speaker notes and output status",
+  "version": "0.0.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/nerif-tafu/companion-module-gslides-ndi-presenter.git",
+  "bugs": "https://github.com/nerif-tafu/companion-module-gslides-ndi-presenter/issues",
+  "maintainers": [
+    {
+      "name": "nerif-tafu",
+      "url": "https://github.com/nerif-tafu"
+    }
+  ],
+  "legacyIds": [],
+  "runtime": {
+    "type": "node22",
+    "api": "nodejs-ipc",
+    "apiVersion": "0.0.0",
+    "entrypoint": "../dist/index.js"
+  },
+  "manufacturer": "Google Slides NDI Presenter",
+  "products": ["Google Slides NDI Presenter"],
+  "keywords": ["Presentation", "Google Slides", "Slides", "NDI", "Software"]
+}
