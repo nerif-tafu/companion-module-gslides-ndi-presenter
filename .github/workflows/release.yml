@@ -1,0 +1,57 @@
+name: Release
+
+# Packages the module and attaches the .tgz to the release whenever a release is published.
+# The package can be loaded into Companion with "Import module package".
+# It can also be run by hand against an existing release tag (e.g. to rebuild the package).
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to package and attach to (e.g. v1.0.1)
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Work out the version from the tag
+        id: version
+        run: |
+          tag='${{ github.event.release.tag_name || inputs.tag }}'
+          version="${tag#v}"
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then echo "Tag '$tag' isn't a version like v1.2.3"; exit 1; fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.version.outputs.tag }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Install
+        run: |
+          corepack enable
+          yarn install
+
+      - name: Build and package
+        run: |
+          # The package version comes from the tag, so it always matches the release.
+          npm pkg set version=${{ steps.version.outputs.version }}
+          yarn build
+          yarn companion-module-build
+
+      - name: Attach the package to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          package=$(ls *.tgz | head -n 1)
+          gh release upload "${{ steps.version.outputs.tag }}" "$package" --clobber --repo "${{ github.repository }}"

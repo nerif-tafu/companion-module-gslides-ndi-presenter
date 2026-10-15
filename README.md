@@ -6,6 +6,10 @@ With it you can run the deck from a Stream Deck: next and previous, jump to slid
 
 The module follows the app's state over its event stream (`/api/events`) rather than polling, so buttons update straight away. Commands go to the app's HTTP API.
 
+## Installing
+
+Download the `.tgz` package from the latest [release](https://github.com/nerif-tafu/companion-module-gslides-ndi-presenter/releases), then in Companion go to **Modules → Import module package** and pick that file. Add a "Google Slides NDI Presenter" connection and enter the address and port of the PC running the app.
+
 ## Development
 
 You need Node 22 and Yarn (via `corepack enable`).
@@ -26,6 +30,10 @@ Layout:
 - `src/api.ts` is the HTTP client and the event stream reader, with automatic reconnects.
 - `src/actions.ts`, `src/feedbacks.ts`, `src/variables.ts` and `src/presets.ts` hold the definitions.
 - `src/upgrades.ts` is for upgrade scripts. Add one whenever an action or feedback id, or its options, change.
+
+## Releasing
+
+Publish a release on GitHub with a tag like `v1.1.0`. The Release workflow packages the module with that version and attaches the `.tgz` to the release. If a package ever needs rebuilding, run the workflow by hand from the Actions tab and give it the tag.
 
 ## License
 
