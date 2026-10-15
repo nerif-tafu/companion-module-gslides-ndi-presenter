@@ -6,6 +6,7 @@ type Bool<T extends Record<string, unknown> = Record<string, never>> = { type: '
 export type FeedbacksSchema = {
   presentationOpen: Bool
   loading: Bool
+  presentationOutOfDate: Bool
   currentSlide: Bool<{ slide: number }>
   atFirstSlide: Bool
   atLastSlide: Bool
@@ -40,6 +41,14 @@ export function getFeedbacks(instance: GSlidesNdiPresenterInstance): CompanionFe
       defaultStyle: { bgcolor: AMBER, color: WHITE },
       options: [],
       callback: () => !!s()?.loading,
+    },
+    presentationOutOfDate: {
+      type: 'boolean',
+      name: 'Presentation updated in Google Slides',
+      description: 'True when the deck has been edited since it was loaded, until you refresh it',
+      defaultStyle: { bgcolor: AMBER, color: WHITE },
+      options: [],
+      callback: () => !!s()?.outOfDate,
     },
     currentSlide: {
       type: 'boolean',

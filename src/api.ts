@@ -22,6 +22,12 @@ export interface PresenterState {
   notesScroll: number
   notesMaxScroll: number
   loading: boolean
+  /** Google's revision number of the deck as loaded, null if unknown (app 1.2+). */
+  loadedRevision?: number | null
+  /** Newest revision the app has seen; it checks Google every 30 seconds (app 1.2+). */
+  latestRevision?: number | null
+  /** The deck has been edited in Google Slides since it was loaded (app 1.2+). */
+  outOfDate?: boolean
   live: boolean
   video: VideoInfo | null
   status: string
