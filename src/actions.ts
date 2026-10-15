@@ -113,8 +113,8 @@ export function getActions(instance: GSlidesNdiPresenterInstance): CompanionActi
       callback: async () => send('close'),
     },
     video: {
-      name: 'Video',
-      description: 'Controls the video on the current slide, if there is one',
+      name: 'Video or audio',
+      description: 'Controls the video or audio on the current slide, if there is one',
       options: [
         {
           type: 'dropdown',

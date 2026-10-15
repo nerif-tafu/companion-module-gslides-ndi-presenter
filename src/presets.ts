@@ -76,11 +76,11 @@ export function getPresetDefinitions(label: string): CompanionPresetDefinitions<
     videoToggle: {
       type: 'simple',
       name: 'Play / pause video',
-      style: style('▶ PLAY\nVIDEO', { bgcolor: DARK }),
+      style: style('▶ PLAY', { bgcolor: DARK, size: '18' }),
       steps: [{ down: [{ actionId: 'video', options: { command: 'toggle' } }], up: [] }],
       feedbacks: [
-        { feedbackId: 'videoOnSlide', options: {}, style: { bgcolor: DIM, color: GREY_TEXT, text: 'NO\nVIDEO' }, isInverted: true },
-        { feedbackId: 'videoPlaying', options: {}, style: { bgcolor: GREEN, color: WHITE, text: '⏸ PAUSE\nVIDEO' } },
+        { feedbackId: 'videoOnSlide', options: {}, style: { bgcolor: DIM, color: GREY_TEXT, text: 'NO\nMEDIA', size: '14' }, isInverted: true },
+        { feedbackId: 'videoPlaying', options: {}, style: { bgcolor: GREEN, color: WHITE, text: '⏸ PAUSE' } },
       ],
     },
     videoRestart: {
@@ -93,7 +93,7 @@ export function getPresetDefinitions(label: string): CompanionPresetDefinitions<
     videoStatus: {
       type: 'simple',
       name: 'Video status',
-      style: style(`VIDEO\n${v('video_state')}\n${v('video_quality')}`, { bgcolor: DARK, size: '14' }),
+      style: style(`${v('media_kind')}\n${v('media_position')} / ${v('media_duration')}\n${v('video_state')}`, { bgcolor: DARK, size: '14' }),
       steps: [{ down: [], up: [] }],
       feedbacks: [{ feedbackId: 'videoPlaying', options: {}, style: { bgcolor: GREEN, color: WHITE } }],
     },
@@ -209,7 +209,7 @@ export const presetStructure: CompanionPresetSection<PresenterTypes>[] = [
   },
   {
     id: 'video',
-    name: 'Video',
+    name: 'Video and audio',
     description: 'For slides with an embedded video. Greyed out when the slide has none.',
     definitions: ['videoToggle', 'videoRestart', 'videoStatus'],
   },

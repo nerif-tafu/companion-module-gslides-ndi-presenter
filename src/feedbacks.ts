@@ -79,14 +79,14 @@ export function getFeedbacks(instance: GSlidesNdiPresenterInstance): CompanionFe
     },
     videoOnSlide: {
       type: 'boolean',
-      name: 'Current slide has a video',
+      name: 'Current slide has video or audio',
       defaultStyle: { bgcolor: PURPLE, color: WHITE },
       options: [],
       callback: () => !!s()?.video,
     },
     videoPlaying: {
       type: 'boolean',
-      name: 'Video is playing',
+      name: 'Video or audio is playing',
       defaultStyle: { bgcolor: GREEN, color: WHITE },
       options: [],
       callback: () => {

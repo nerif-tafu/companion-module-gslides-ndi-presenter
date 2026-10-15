@@ -2,11 +2,17 @@ import { createModuleLogger } from '@companion-module/base'
 
 const log = createModuleLogger('API')
 
+/** The video or audio clip on the current slide. */
 export interface VideoInfo {
+  /** "video" or "audio" (older app versions only report video, without this field). */
+  kind?: 'video' | 'audio' | string
   state: 'playing' | 'paused' | 'ended' | 'buffering' | 'ready' | string
   quality: string
   best: string
   resolution: string
+  /** Seconds played and total length, rounded down (app 1.3.0 and later). */
+  position?: number
+  duration?: number
 }
 
 /** The state document the app publishes on /api/state and /api/events. */

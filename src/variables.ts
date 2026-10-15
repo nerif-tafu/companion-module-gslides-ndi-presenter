@@ -16,6 +16,10 @@ export type VariablesSchema = {
   video: boolean
   video_state: string
   video_quality: string
+  media_kind: string
+  media_position: string
+  media_duration: string
+  media_remaining: string
   slides_receivers: number
   notes_receivers: number
   slides_ndi_name: string
@@ -33,9 +37,13 @@ export const variableDefinitions: CompanionVariableDefinitions<VariablesSchema> 
   out_of_date: { name: 'Presentation has been updated in Google Slides since it was loaded' },
   notes_size: { name: 'Notes text size in px (the fitted size while auto-fit is on)' },
   notes_autofit: { name: 'Notes auto-fit is on' },
-  video: { name: 'Current slide has a video' },
-  video_state: { name: 'Video state (playing, paused, ended, buffering, ready, or empty)' },
-  video_quality: { name: 'Video quality, e.g. 720p' },
+  video: { name: 'Current slide has video or audio' },
+  video_state: { name: 'Video or audio state (playing, paused, ended, buffering, ready, or empty)' },
+  video_quality: { name: 'Video quality, e.g. 720p (empty for audio)' },
+  media_kind: { name: 'What the current slide has: video, audio, or empty' },
+  media_position: { name: 'Video or audio position, e.g. 0:42' },
+  media_duration: { name: 'Video or audio length, e.g. 3:34' },
+  media_remaining: { name: 'Video or audio time left, e.g. 2:52' },
   slides_receivers: { name: 'Receivers watching the slides output' },
   notes_receivers: { name: 'Receivers watching the presenter view output' },
   slides_ndi_name: { name: 'NDI name of the slides output' },
@@ -60,10 +68,20 @@ export function variableValues(state: PresenterState | null, connected: boolean)
     notes_autofit: !!state?.notesAutoFit,
     video: !!video,
     video_state: video?.state ?? '',
-    video_quality: video ? (QUALITY_LABELS[video.quality] ?? QUALITY_LABELS[video.best] ?? '') : '',
+    video_quality: video && video.kind !== 'audio' ? (QUALITY_LABELS[video.quality] ?? QUALITY_LABELS[video.best] ?? '') : '',
+    media_kind: video ? (video.kind ?? 'video') : '',
+    media_position: video && video.duration ? clock(video.position ?? 0) : '',
+    media_duration: video && video.duration ? clock(video.duration) : '',
+    media_remaining: video && video.duration ? clock(video.duration - (video.position ?? 0)) : '',
     slides_receivers: state?.slidesReceivers ?? 0,
     notes_receivers: state?.notesReceivers ?? 0,
     slides_ndi_name: state?.slidesNdiName ?? '',
     notes_ndi_name: state?.notesNdiName ?? '',
   }
+}
+
+/** Seconds as m:ss. */
+function clock(seconds: number): string {
+  const s = Math.max(0, Math.floor(seconds))
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`
 }
