@@ -27,25 +27,26 @@ The connection follows the app live, so feedbacks and variables update as soon a
 
 ### Feedbacks
 
-Presentation is open · Presentation is loading · Current slide is… · On the first slide · On the last slide · Current slide has a video · Video is playing · Notes auto-fit is on · Notes can scroll (up/down) · NDI output has receivers
+Presentation is open · Presentation is loading · Presentation updated in Google Slides · Current slide is… · On the first slide · On the last slide · Current slide has a video · Video is playing · Notes auto-fit is on · Notes can scroll (up/down) · NDI output has receivers
 
 ### Variables
 
-| Variable                                                                               |                                                                       |
-| -------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `$(gslides-ndi:title)`                                                                 | Presentation title                                                    |
-| `$(gslides-ndi:slide)` / `$(gslides-ndi:slide_count)`                                  | Current slide and total                                               |
-| `$(gslides-ndi:next_slide)`                                                            | Next slide number, empty on the last slide                            |
-| `$(gslides-ndi:slides_remaining)`                                                      | Slides left after this one                                            |
-| `$(gslides-ndi:loading)`                                                               | true while a deck is opening or refreshing                            |
-| `$(gslides-ndi:notes_size)` / `$(gslides-ndi:notes_autofit)`                           | Notes text size in px, and whether auto-fit is on                     |
-| `$(gslides-ndi:video)` / `$(gslides-ndi:video_state)` / `$(gslides-ndi:video_quality)` | Whether the slide has a video, its state, and its quality (e.g. 720p) |
-| `$(gslides-ndi:slides_receivers)` / `$(gslides-ndi:notes_receivers)`                   | NDI receivers watching each output                                    |
-| `$(gslides-ndi:slides_ndi_name)` / `$(gslides-ndi:notes_ndi_name)`                     | NDI names of the outputs                                              |
-| `$(gslides-ndi:connected)`                                                             | Whether Companion can reach the app                                   |
+| Variable                                                                               |                                                                         |
+| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `$(gslides-ndi:title)`                                                                 | Presentation title                                                      |
+| `$(gslides-ndi:slide)` / `$(gslides-ndi:slide_count)`                                  | Current slide and total                                                 |
+| `$(gslides-ndi:next_slide)`                                                            | Next slide number, empty on the last slide                              |
+| `$(gslides-ndi:slides_remaining)`                                                      | Slides left after this one                                              |
+| `$(gslides-ndi:loading)`                                                               | true while a deck is opening or refreshing                              |
+| `$(gslides-ndi:out_of_date)`                                                           | true when the deck has been edited in Google Slides since it was loaded |
+| `$(gslides-ndi:notes_size)` / `$(gslides-ndi:notes_autofit)`                           | Notes text size in px, and whether auto-fit is on                       |
+| `$(gslides-ndi:video)` / `$(gslides-ndi:video_state)` / `$(gslides-ndi:video_quality)` | Whether the slide has a video, its state, and its quality (e.g. 720p)   |
+| `$(gslides-ndi:slides_receivers)` / `$(gslides-ndi:notes_receivers)`                   | NDI receivers watching each output                                      |
+| `$(gslides-ndi:slides_ndi_name)` / `$(gslides-ndi:notes_ndi_name)`                     | NDI names of the outputs                                                |
+| `$(gslides-ndi:connected)`                                                             | Whether Companion can reach the app                                     |
 
 Replace `gslides-ndi` with your connection's label if you renamed it.
 
 ### Presets
 
-Ready-made buttons for navigation (with a slide counter), "go to slide 1–24", video, speaker notes, the presentation title, refresh, close, and receiver status for each output. The Close preset needs a one-second hold so a stray tap can't take the deck off air.
+Ready-made buttons for navigation (with a slide counter), "go to slide 1–24", video, speaker notes, the presentation title, refresh, close, and receiver status for each output. The Refresh preset turns amber and reads UPDATED when someone has edited the deck in Google Slides since it was loaded (the app checks every 30 seconds), so you know a refresh will pick up changes. The Close preset needs a one-second hold so a stray tap can't take the deck off air.

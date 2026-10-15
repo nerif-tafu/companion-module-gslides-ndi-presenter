@@ -148,7 +148,11 @@ export function getPresetDefinitions(label: string): CompanionPresetDefinitions<
       name: 'Refresh presentation',
       style: style('⟳\nREFRESH'),
       steps: [{ down: [{ actionId: 'refresh', options: {} }], up: [] }],
-      feedbacks: [{ feedbackId: 'loading', options: {}, style: { bgcolor: AMBER, color: WHITE } }],
+      feedbacks: [
+        { feedbackId: 'presentationOutOfDate', options: {}, style: { bgcolor: AMBER, color: WHITE, text: '⟳\nUPDATED' } },
+        // Listed last so it wins while the refresh is running.
+        { feedbackId: 'loading', options: {}, style: { bgcolor: AMBER, color: WHITE, text: '⟳\nREFRESH' } },
+      ],
     },
     close: {
       type: 'simple',

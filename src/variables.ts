@@ -10,6 +10,7 @@ export type VariablesSchema = {
   slides_remaining: number
   next_slide: string
   loading: boolean
+  out_of_date: boolean
   notes_size: number
   notes_autofit: boolean
   video: boolean
@@ -29,6 +30,7 @@ export const variableDefinitions: CompanionVariableDefinitions<VariablesSchema> 
   slides_remaining: { name: 'Slides left after this one' },
   next_slide: { name: 'Next slide number (empty on the last slide)' },
   loading: { name: 'Presentation is loading' },
+  out_of_date: { name: 'Presentation has been updated in Google Slides since it was loaded' },
   notes_size: { name: 'Notes text size in px (the fitted size while auto-fit is on)' },
   notes_autofit: { name: 'Notes auto-fit is on' },
   video: { name: 'Current slide has a video' },
@@ -53,6 +55,7 @@ export function variableValues(state: PresenterState | null, connected: boolean)
     slides_remaining: Math.max(0, count - slide),
     next_slide: count > 0 && slide < count ? String(slide + 1) : '',
     loading: !!state?.loading,
+    out_of_date: !!state?.outOfDate,
     notes_size: Math.round((state?.notesAutoFit ? state.notesEffectiveFontSize : state?.notesFontSize) ?? 0),
     notes_autofit: !!state?.notesAutoFit,
     video: !!video,
